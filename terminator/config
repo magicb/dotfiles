@@ -1,0 +1,23 @@
+[global_config]
+  title_font = Sans 10
+  title_use_system_font = False
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    color_scheme = green_on_black
+    cursor_color = "#aaaaaa"
+    cursor_shape = ibeam
+    font = Monospace 12
+    foreground_color = "#f3f3f3"
+    scrollbar_position = hidden
+    show_titlebar = False
+    use_system_font = False
