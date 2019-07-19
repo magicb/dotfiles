@@ -7,12 +7,12 @@ prompt_setup_pygmalion(){
   ZSH_THEME_GIT_PROMPT_DIRTY="%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%} ✚"
-  ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[blue]%} ✹"
-  ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%} ✖"
-  ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%} ➜"
-  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[yellow]%} ═"
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✭"
+  ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%}✚ "
+  ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[blue]%}✹ "
+  ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
+  ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%}➜ "
+  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[yellow]%}═ "
+  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}✭ "
 
   base_prompt='%{$fg[magenta]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}%{$fg[red]%}:%{$reset_color%}%{$fg[cyan]%}%0~%{$reset_color%}%{$fg[red]%}|%{$reset_color%} '
   post_prompt='%{$fg[cyan]%}⇒%{$reset_color%}  '
