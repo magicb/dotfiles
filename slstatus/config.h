@@ -82,5 +82,5 @@ static const struct arg args[] = {
 	{ temp, "{\"full_text\":\" %s°C\"},", "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input", 1},
 	{ keymap, "{\"markup\":\"pango\",\"full_text\":\"<span foreground='#00F0FF'>%s</span>\"},", NULL, 1 },
 	{ datetime, "{\"markup\":\"pango\",\"full_text\":\"%s\"},", "%a, %d %b", 60 },
-	{ datetime, "{\"markup\":\"pango\",\"color\":\"#2DD500\",\"full_text\":\"<span font_desc='FontAwesome'></span> <b>%s</b>\"}]", "%H:%M", 1 }
+	{ datetime, "{\"markup\":\"pango\",\"full_text\":\"<span font_desc='FontAwesome'></span> <b>%s</b>\"}]", "%H:%M", 1 }
 };
