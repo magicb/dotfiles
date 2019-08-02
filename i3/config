@@ -348,7 +348,7 @@ mode "resize" {
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id feh --bg-scale /usr/share/backgrounds/wallpapers-2018/summer-time.jpg; sleep 1; compton -b --config ~/.config/compton.conf --xinerama-shadow-crop
-exec --no-startup-id feh --bg-scale ~/Загрузки/lampa_stena_kirpichnyj_137605_1920x1080.jpg; sleep 1; compton -b --config ~/.config/compton.conf
+exec --no-startup-id feh --bg-scale ~/Загрузки/coast-3358815_1920.jpg; sleep 1; compton -b --config ~/.config/compton.conf
 #exec --no-startup-id compton -b
 #exec --no-startup-id manjaro-hello
 #exec --no-startup-id nm-applet
@@ -445,7 +445,7 @@ bar {
 
 
         focused_workspace  #FFFFFF #00000000 #FFFFFF
-        inactive_workspace #FFFFFF50 #00000000 #FFFFFF50
+        inactive_workspace #FFFFFF80 #00000000 #FFFFFF80
         active_workspace   #FFFFFF #00000000 #FFFFFF
 #        urgent_workspace   $darkred     $darkred     $transparent
 #        binding_mode       $darkred     $darkred     $transparent
