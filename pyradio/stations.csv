@@ -44,3 +44,8 @@ Country (RadCap),http://79.120.77.11:8002/country
 Country Blues (RadCap),http://79.120.77.11:8002/countryblues
 Honky-Tonk (RadCap),http://79.120.39.202:8002/honkytonk
 Smooth Jazz (RadCap),http://79.120.39.202:8002/smoothjazz
+Prog-Rock (RadCap),http://79.111.119.111:8002/progressiverock
+Blues-Rock (RadCap),http://79.120.39.202:8002/bluesrock
+Symph-Prog (RadCap),http://79.120.39.202:8002/symphorock
+Стихи (RadCap),http://79.120.77.11:8002/poetryru
+Piano (RadCAp),http://79.120.77.11:8002/piano
