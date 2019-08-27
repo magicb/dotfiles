@@ -105,3 +105,5 @@ web(){
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+setopt no_share_history
+unsetopt share_history
