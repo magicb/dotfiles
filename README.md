@@ -4,3 +4,4 @@
 
 https://lisakov.com/blog/gentoo-for-goofy/
 https://github.com/dikiaap/dotfiles
+http://gentoo.theserverside.ru/gentoo-doc/
