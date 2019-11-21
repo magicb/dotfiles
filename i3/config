@@ -175,7 +175,7 @@ set $wsb10 10
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3; exec [ $(ps h -C VirtualBoxVM | grep -v "autohide" | wc -l) = 0 ] && /usr/lib/virtualbox/VirtualBoxVM --comment "Windows" --startvm "{2926c4e1-3d86-46be-b45b-c1b04d39bb73}"
+bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace $ws6

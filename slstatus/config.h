@@ -7,7 +7,7 @@ const unsigned int interval = 1000;
 static const char unknown_str[] = "n/a";
 
 /* maximum output string length */
-#define MAXLEN 2048
+#define MAXLEN 4096
 
 /*
  * function            description                     argument (example)
@@ -63,24 +63,22 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ run_command, ",[{\"color\":\"#CCFF90\", \"full_text\":\" %s\"},", "playerctl --player=vlc metadata vlc:nowplaying", 1 },
+	{ run_command, ",[{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"color\":\"#CCFF90\", \"background\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" %s \"},", "playerctl --player=vlc metadata vlc:nowplaying", 1 },
 //	{ vol_perc, "{\"full_text\":\" %s%%\"},", "/dev/mixer", 1}, // modprobe snd-pcm-oss
-	{ ram_used, "{\"full_text\":\" %s", NULL, 1},
-	{ ram_total, "/%s\"},", NULL, 0 },
-	{ disk_free, "{\"full_text\":\" %s/", "/", 30 },
+	{ ram_used, "{\"full_text\":\"\", \"background\": \"#1f0e11AA\", \"color\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\": false, \"separator_block_width\": 0, \"color\":\"#000000\", \"background\": \"#FFFFFFAA\", \"full_text\":\" %s", NULL, 1},
+	{ ram_total, "/%s \"},", NULL, 0 },
+	{ disk_free, "{\"full_text\":\"\", \"color\": \"#BC913DAA\", \"background\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0}, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#BC913DAA\", \"color\": \"#FFFFFF\", \"full_text\":\" %s/", "/", 30 },
 	{ disk_total, "%s\"},", "/", 0 },
-	{ disk_free, "{\"full_text\":\" %s/", "/home/magy", 30 },
+	{ disk_free, "{\"separator\":false, \"separator_block_width\": 0, \"background\": \"#BC913DAA\", \"color\": \"#FFFFFF\", \"full_text\":\"  %s/", "/home/magy", 30 },
 	{ disk_total, "%s\"},", "/home/magy", 0 },
-	{ netbytes_rx, "{\"min_width\":60,\"full_text\":\"▼ %s\"},", "enp3s0", 1 },
-	{ netbytes_tx, "{\"min_width\":60,\"full_text\":\"▲ %s\"},", "enp3s0", 1 },
+	{ netbytes_rx, "{\"full_text\":\"\", \"background\": \"#BC913DAA\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#1f0e11AA\", \"min_width\":80,\"full_text\":\"▼ %s\"},", "enp2s0", 1 },
+	{ netbytes_tx, "{\"background\": \"#1f0e11AA\", \"min_width\":80,\"separator\":false, \"separator_block_width\": 0, \"full_text\":\"▲ %s\"},", "enp2s0", 1 },
 //	{ netspeed_rx, "(%s/", "enp3s0" },
 //	{ netspeed_tx, "%s)", "enp3s0" },
-	{ run_command, "{\"full_text\":\" %s\"},", "wget -O- \"http://proxy.datakrat.ru/sams/main.php?show=exe&function=userform&userid=5767824c41dce\" --no-proxy -q --no-cookies --header \"Cookie: domainuser=lam; gauditor=0; clickedFolder=3%5E4%5E156%5E\" | awk '/kb/ {print $1 \".\" $3 \"Gb\"}'", 60*5 },
-	//{ run_command, "{\"full_text\":\"%s\"},", "sh ~/proxy.sh", 60},
-	{ cpu_perc, "{\"min_width\":50, \"full_text\":\" %2s%%\"},", NULL, 1 },
-	{ cpu_freq, "{\"full_text\":\"%s\"},", NULL, 1 },
-	{ temp, "{\"full_text\":\" %s°C\"},", "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input", 1},
-	{ keymap, "{\"markup\":\"pango\",\"full_text\":\"<span foreground='#00F0FF'>%s</span>\"},", NULL, 1 },
-	{ datetime, "{\"markup\":\"pango\",\"full_text\":\"%s\"},", "%a, %d %b", 60 },
-	{ datetime, "{\"markup\":\"pango\",\"full_text\":\"<span font_desc='FontAwesome'></span> <b>%s</b>\"}]", "%H:%M", 1 }
+	{ cpu_perc, "{\"full_text\":\"\", \"color\": \"#FFFFFFAA\", \"background\": \"#1F0E11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#FFFFFFAA\", \"color\": \"#000000\", \"min_width\":50, \"full_text\":\" %2s%%\"},", NULL, 1 },
+	{ cpu_freq, "{\"background\": \"#FFFFFFAA\", \"color\": \"#000000\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" / %s \"},", NULL, 1 },
+	{ temp, "{\"full_text\":\"\", \"color\": \"#00FF00AA\", \"background\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0}, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#00FF00AA\", \"color\": \"#FFFFFF\", \"full_text\":\" %s°C \"},", "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input", 1},
+	{ keymap, "{\"full_text\":\"\", \"color\": \"#FFFFFFAA\", \"background\": \"#00FF00AA\", \"separator\":false, \"separator_block_width\": 0}, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#FFFFFFAA\", \"color\": \"#FF0000\", \"full_text\": \" %s \"},", NULL, 1 },
+	{ datetime, "{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"background\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#1f0e11AA\", \"markup\":\"pango\",\"full_text\":\"%s\"},", " %a, %d %b ", 60 },
+	{ datetime, "{\"full_text\":\"\", \"color\": \"#FFFFFFAA\", \"background\": \"#1F0E11FA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#FFFFFFAA\", \"color\":\"#000000\", \"markup\":\"pango\",\"full_text\":\"<span></span> <b>%s </b>\"}, {\"full_text\":\"\", \"color\": \"#1F0E1100\", \"background\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0 }]", "%H:%M", 1 }
 };
