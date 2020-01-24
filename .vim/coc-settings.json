@@ -1,0 +1,21 @@
+{
+	"suggest.echodocSupport": true,
+	"diagnostic.messageTarget": "echo",
+	"signature.target": "echo",
+	"coc.preferences.currentFunctionSymbolAutoUpdate": true,
+	"languageserver": {
+		"golang": {
+			"host": "127.0.0.1",
+			"port": 9527,
+			"rootPatterns": [
+				"go.mod",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"filetypes": [
+				"go"
+			]
+		}
+	}
+}
