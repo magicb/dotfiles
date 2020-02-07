@@ -1,0 +1,26 @@
+
+Window cursor moving:
+Ctrl+ww cycle though all windows
+Ctrl+wh takes you left a window
+Ctrl+wj takes you down a window
+Ctrl+wk takes you up a window
+Ctrl+wl takes you right a window
+
+Window moving:
+Ctrl W + L - Move the current window to the "far right"
+Ctrl W + H - Move the current window to the "far left"
+Ctrl W + J - Move the current window to the "very bottom"
+Ctrl W + K - Move the current window to the "very top"
+
+Ctrl + u - Undo
+Ctrl + r - Redo
+
+Ctrl + g - NERTree
+
+"+yy - Copy to global clipboard
+"+p - Paste from global clipboard
+
+vip - Select block
+[vcd]it - [Select, change, delete] inner tag
+[vcd]i" - [Select, change, delete] inner quotes
+Ctrl+[ - Esc

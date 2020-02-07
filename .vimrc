@@ -34,6 +34,10 @@ set undodir=~/.vim/undodir
 filetype plugin indent on
 runtime macros/matchit.vim
 
+"setlocal foldmethod=syntax
+"set foldenable
+"set foldmethod=indent
+
 set spell
 set spelllang=en,ru
 
@@ -58,7 +62,7 @@ let g:go_info_mode='gopls'
 
 "au BufRead,BufNewFile *.html set filetype=gohtmltmpl
 "au filetype go inoremap <buffer> . .<C-x><C-o>
-
+"
 " If you want to disable gofmt on save
 " let g:go_fmt_autosave = 0
 
@@ -70,10 +74,52 @@ set lbr
 let mapleader = ","
 noremap <leader>/ :Commentary<CR>
 
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+nnoremap <leader>d ""d
+nnoremap <leader>D ""D
+vnoremap <leader>d ""d
+
 " NERDTree plugin specific commands
 :nnoremap <C-g> :NERDTreeToggle<CR>
 " let g:NERDTreeMinimalUI = 1
 "autocmd vimenter * NERDTree
+
+fu! MyTabLabel(n)
+let buflist = tabpagebuflist(a:n)
+let winnr = tabpagewinnr(a:n)
+let string = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+return empty(string) ? '[unnamed]' : string
+endfu
+
+fu! MyTabLine()
+let s = ''
+for i in range(tabpagenr('$'))
+" select the highlighting
+    if i + 1 == tabpagenr()
+    let s .= '%#TabLineSel#'
+    else
+    let s .= '%#TabLine#'
+    endif
+
+    " set the tab page number (for mouse clicks)
+    "let s .= '%' . (i + 1) . 'T'
+    " display tabnumber (for use with <count>gt, etc)
+    let s .= ' '. (i+1) . ' ' 
+
+    " the label is made by MyTabLabel()
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+
+    if i+1 < tabpagenr('$')
+        let s .= ' |'
+    endif
+endfor
+return s
+endfu
+set tabline=%!MyTabLine()
 
 " use `:OR` for organize import of current buffer
 autocmd BufWritePre *.go :OR
@@ -181,6 +227,7 @@ Plug 'aserebryakov/vim-todo-lists'
 Plug 'lyokha/vim-xkbswitch'
 call plug#end()
 
+"au BufNewFile,BufRead *.xml,*.htm,*.html so XMLFolding
 set number
 set cursorline
 
@@ -348,7 +395,7 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> L :call StatusDiagnostic()<CR>
+" nnoremap <silent> L :call StatusDiagnostic()<CR>
 
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
