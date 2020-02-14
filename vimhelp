@@ -15,12 +15,15 @@ Ctrl W + K - Move the current window to the "very top"
 Ctrl + u - Undo
 Ctrl + r - Redo
 
+Ctrl+[ - Esc
+
 Ctrl + g - NERTree
 
 "+yy - Copy to global clipboard
 "+p - Paste from global clipboard
 
+z[fad] -[Create, toggle, delete] fold
+
 vip - Select block
 [vcd]it - [Select, change, delete] inner tag
 [vcd]i" - [Select, change, delete] inner quotes
-Ctrl+[ - Esc

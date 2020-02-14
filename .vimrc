@@ -71,6 +71,9 @@ set breakindent
 set formatoptions=l
 set lbr
 
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
 let mapleader = ","
 noremap <leader>/ :Commentary<CR>
 
