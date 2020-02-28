@@ -12,6 +12,18 @@ Ctrl W + H - Move the current window to the "far left"
 Ctrl W + J - Move the current window to the "very bottom"
 Ctrl W + K - Move the current window to the "very top"
 
+Moving cursor:
+w - Next word on start
+e - Next word on end
+W - Next big word on start
+E - Next big word on end
+b - Prev word on start
+B - Prev big word on start
+{n}gg - Move to n line
+{n}f{char} - Move to n next char in line
+{n}F{char} - Move to n prev char in line
+
+
 Ctrl + u - Undo
 Ctrl + r - Redo
 
@@ -27,3 +39,5 @@ z[fad] -[Create, toggle, delete] fold
 vip - Select block
 [vcd]it - [Select, change, delete] inner tag
 [vcd]i" - [Select, change, delete] inner quotes
+
+:%s/[pattern]//gn - count of matches
