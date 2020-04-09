@@ -94,7 +94,9 @@ vnoremap <leader>d ""d
 fu! MyTabLabel(n)
 let buflist = tabpagebuflist(a:n)
 let winnr = tabpagewinnr(a:n)
-let string = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+" let string = fnamemodify(bufname(buflist[winnr - 1]), ':p:.')
+let string = fnamemodify(bufname(buflist[winnr - 1]), ':p:h:t')
+let string .= '/' . fnamemodify(bufname(buflist[winnr - 1]), ':t:.')
 return empty(string) ? '[unnamed]' : string
 endfu
 
@@ -157,6 +159,10 @@ let g:airline#extensions#coc#error_symbol = 'E:'
 let g:airline#extensions#coc#warning_symbol = 'W:'
 let g:airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 let g:airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+
+" let g:airline_section_z = '%r'
+" let g:airline#extensions#tabline#fnamemod = ':r'
 " unicode symbols
 "let g:airline_left_sep = '»'
 "let g:airline_left_sep = '▶'
