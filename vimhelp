@@ -13,6 +13,12 @@ Ctrl W + J - Move the current window to the "very bottom"
 Ctrl W + K - Move the current window to the "very top"
 
 Moving cursor:
+H - Move to the first line on the screen
+M - Move to the middle line of the screen
+L - Move to the last line of the screen
+Ctrl+f - Move forward one screen
+Ctrl+b - Move backward one screen
+
 w - Next word on start
 e - Next word on end
 W - Next big word on start
@@ -22,7 +28,9 @@ B - Prev big word on start
 {n}gg - Move to n line
 {n}f{char} - Move to n next char in line
 {n}F{char} - Move to n prev char in line
-
+f{char};;; - Move 3 times to next char in line
+* - Move to next current word in document
+# - Move to prev current word in document
 
 Ctrl + u - Undo
 Ctrl + r - Redo
@@ -41,3 +49,5 @@ vip - Select block
 [vcd]i" - [Select, change, delete] inner quotes
 
 :%s/[pattern]//gn - count of matches
+
+Ctrl+Z - Suspend vim. In terminal type "fg" to go back vim.
