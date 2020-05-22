@@ -101,9 +101,19 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 alias youtube="i3-msg exec 'youtube-viewer $1'"
 #alias web="i3-msg 'chromium --app=$2'"
 web(){
-  i3-msg 'exec chromium --app='$1
+  i3-msg 'exec chromium --app=$1'
 }
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-setopt no_share_history
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 unsetopt share_history
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+
+
+export GOBIN=/home/magy/go/bin
+export GOPATH=/home/magy/go
+
+export PATH=$PATH:$GOBIN
+
+#eval "$(starship init zsh)"
