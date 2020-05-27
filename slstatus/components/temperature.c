@@ -18,17 +18,17 @@
 			return NULL;
 		}
 
-if (temp/1000 > 70) {
-	FILE *fp;
-	fp = popen("notify-send -u critical \"CPU Temperature CRITICAL!!!\"", "r");
-	pclose(fp);
-}
+		if (temp/1000 > 70) {
+			FILE *fp;
+			fp = popen("notify-send -u critical \"CPU Temperature CRITICAL!!!\"", "r");
+			pclose(fp);
+		}
 
-if (temp/1000 > 80) {
-	FILE *fp1;
-	fp1 = popen("i3exit shutdown", "r");
-	pclose(fp1);
-}
+		if (temp/1000 > 80) {
+			FILE *fp1;
+			fp1 = popen("i3exit shutdown", "r");
+			pclose(fp1);
+		}
 
 		return bprintf("%ju", temp / 1000);
 	}

@@ -51,3 +51,5 @@ vip - Select block
 :%s/[pattern]//gn - count of matches
 
 Ctrl+Z - Suspend vim. In terminal type "fg" to go back vim.
+
+Ctrl+A / Ctrl+X - Increment/decrement number

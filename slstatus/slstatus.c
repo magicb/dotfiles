@@ -15,8 +15,10 @@
 struct arg {
 	const char *(*func)();
 	const char *fmt;
+	const char *fmt_crit;
 	const char *args;
 	const int interval;
+	const int critical;
 };
 
 struct argstat {
@@ -52,6 +54,37 @@ usage(void)
 	die("usage: %s [-s]", argv0);
 }
 
+int toint(char const *s)
+{
+     if ( s == NULL || *s == '\0' )
+		 return 0;
+
+     while(*s)
+     {
+          if ( (*s >= '0' && *s <= '9') || *s == '+' || *s == '-' )
+			  break;
+          ++s;
+     }
+
+     int negate = (s[0] == '-');
+     if ( *s == '+' || *s == '-' ) 
+         ++s;
+
+     if ( *s == '\0')
+		 return 0;
+
+     int result = 0;
+     while(*s)
+     {
+          if ( *s >= '0' && *s <= '9' )
+              result = result * 10  - (*s - '0');  //assume negative number
+		  else
+			  break;
+          ++s;
+     }
+     return negate ? result : -result; //-result is positive!
+} 
+
 int
 main(int argc, char *argv[])
 {
@@ -63,6 +96,8 @@ main(int argc, char *argv[])
 	int sflag, ret;
 	char status[MAXLEN];
 	const char *res;
+	const char *fmt;
+	int val;
 
 	sflag = 0;
 	ARGBEGIN {
@@ -88,9 +123,11 @@ main(int argc, char *argv[])
 	printf("{\"version\":1}[\n[]\n");
 
 	for (i = 0; i < LEN(args); i++) {
+		/* printf("%s %s %s %d %d\r\n", args[i].fmt, args[i].fmt_crit, args[i].args, args[i].interval, args[i].critical); */
 		argsstat[i].curint = args[i].interval;
 		if (!(res = args[i].func(args[i].args)))
 			res = unknown_str;
+		/* printf("%s\r\n", res); */
 		memcpy(argsstat[i].res, res, strlen(res)+1);
 	}
 
@@ -101,7 +138,8 @@ main(int argc, char *argv[])
 
 		status[0] = '\0';
 		for (i = len = 0; i < LEN(args); i++) {
-			//res = argsstat[i].res;	
+			//res = argsstat[i].res;
+			val = 0;
 			if (!(argsstat[i].curint == -1 || --(argsstat[i].curint) > 0)) {
 				if (args[i].interval > 0)
 					argsstat[i].curint = args[i].interval;
@@ -111,8 +149,14 @@ main(int argc, char *argv[])
 				memcpy(argsstat[i].res, res, strlen(res)+1);
 			}
 			//printf("%d %s %s %p %p %d\n", argsstat[i].curint, res, argsstat[i].res, argsstat[i].res, res, strlen(res));
-			if ((ret = esnprintf(status + len, sizeof(status) - len,
-			                    args[i].fmt, argsstat[i].res)) < 0) {
+			val = toint(res);
+			// printf("\t\t\t\t%d\r\n", val);
+			if (args[i].fmt_crit != NULL && val != 0 && ( (args[i].critical > 0 && val > args[i].critical) || (args[i].critical < 0 && val < args[i].critical)))
+				fmt = args[i].fmt_crit;
+			else
+				fmt = args[i].fmt;
+
+			if ((ret = esnprintf(status + len, sizeof(status) - len, fmt, argsstat[i].res)) < 0) {
 				break;
 			}
 			len += ret;
