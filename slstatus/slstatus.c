@@ -151,7 +151,7 @@ main(int argc, char *argv[])
 			//printf("%d %s %s %p %p %d\n", argsstat[i].curint, res, argsstat[i].res, argsstat[i].res, res, strlen(res));
 			val = toint(res);
 			// printf("\t\t\t\t%d\r\n", val);
-			if (args[i].fmt_crit != NULL && val != 0 && ( (args[i].critical > 0 && val > args[i].critical) || (args[i].critical < 0 && val < args[i].critical)))
+			if (args[i].fmt_crit != NULL && val != 0 && ( (args[i].critical > 0 && val > args[i].critical) || (args[i].critical < 0 && val < args[i].critical*-1)))
 				fmt = args[i].fmt_crit;
 			else
 				fmt = args[i].fmt;
