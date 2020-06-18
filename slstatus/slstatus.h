@@ -21,6 +21,8 @@ const char *disk_used(const char *path);
 /* entropy */
 const char *entropy(void);
 
+const char *ping(char* hostname);
+
 /* hostname */
 const char *hostname(void);
 

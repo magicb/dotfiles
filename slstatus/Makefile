@@ -18,7 +18,8 @@ COM =\
 	components/keymap\
 	components/load_avg\
 	components/netspeeds\
-        components/netbytes\
+    components/netbytes\
+    components/ping\
 	components/num_files\
 	components/ram\
 	components/run_command\

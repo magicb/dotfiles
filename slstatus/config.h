@@ -73,6 +73,7 @@ static const struct arg args[] = {
 	{ disk_total, "%s\"},", NULL, "/home/magy", 0, 0 },
 	{ netbytes_rx, "{\"full_text\":\"\", \"background\": \"#BC913DAA\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#1f0e11AA\", \"min_width\":80,\"full_text\":\"▼ %s\"},", NULL, "enp2s0", 1, 0 },
 	{ netbytes_tx, "{\"background\": \"#1f0e11AA\", \"min_width\":80,\"separator\":false, \"separator_block_width\": 0, \"full_text\":\"▲ %s\"},", NULL, "enp2s0", 1, 0 },
+	{ ping, "{\"background\": \"#1f0e11AA\", \"min_width\":80,\"separator\":false, \"separator_block_width\": 0, \"full_text\":\"%sms\"},", "{\"background\": \"#1f0e11AA\", \"color\": \"#FF0000\", \"min_width\":80,\"separator\":false, \"separator_block_width\": 0, \"full_text\":\"%sms\"},", "ya.ru", 1, 100 },
 //	{ netspeed_rx, "(%s/", "enp3s0" },
 //	{ netspeed_tx, "%s)", "enp3s0" },
 	{ cpu_perc, "{\"full_text\":\"\", \"color\": \"#FFFFFFAA\", \"background\": \"#1F0E11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#FFFFFFAA\", \"color\": \"#000000\", \"min_width\":50, \"full_text\":\" %2s%%\"},", "{\"full_text\":\"\", \"color\": \"#FFFFFFAA\", \"background\": \"#1F0E11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\":false, \"separator_block_width\": 0, \"background\": \"#FFFFFFAA\", \"color\": \"#FF0000\", \"min_width\":50, \"full_text\":\" %2s%%\"},", NULL, 1, 30 },
