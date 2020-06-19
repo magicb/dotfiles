@@ -23,6 +23,8 @@ struct arg {
 
 struct argstat {
 	int curint;
+	int curcrit;
+	int count;
 	char res[128];
 };
 
@@ -85,13 +87,21 @@ int toint(char const *s)
      return negate ? result : -result; //-result is positive!
 } 
 
+struct argstat argsstat[LEN(args)];
+
+const char *crit_abs(int index) {
+	return bprintf("%d", argsstat[index].curcrit);
+}
+const char *crit_per(int index) {
+	return bprintf("%.2f%%", ((double)argsstat[index].curcrit/(double)argsstat[index].count)*100.0);
+}
+
 int
 main(int argc, char *argv[])
 {
 	setlocale(LC_ALL,"ru_RU.UTF-8");
 	struct sigaction act;
 	struct timespec start, current, diff, intspec, wait;
-	struct argstat argsstat[LEN(args)];
 	size_t i, len;
 	int sflag, ret;
 	char status[MAXLEN];
@@ -125,6 +135,8 @@ main(int argc, char *argv[])
 	for (i = 0; i < LEN(args); i++) {
 		/* printf("%s %s %s %d %d\r\n", args[i].fmt, args[i].fmt_crit, args[i].args, args[i].interval, args[i].critical); */
 		argsstat[i].curint = args[i].interval;
+		argsstat[i].count = 0;
+		argsstat[i].curcrit = 0;
 		if (!(res = args[i].func(args[i].args)))
 			res = unknown_str;
 		/* printf("%s\r\n", res); */
@@ -138,22 +150,25 @@ main(int argc, char *argv[])
 
 		status[0] = '\0';
 		for (i = len = 0; i < LEN(args); i++) {
-			//res = argsstat[i].res;
+			res = argsstat[i].res;
 			val = 0;
 			if (!(argsstat[i].curint == -1 || --(argsstat[i].curint) > 0)) {
 				if (args[i].interval > 0)
 					argsstat[i].curint = args[i].interval;
 				if (!(res = args[i].func(args[i].args))) {
 					res = unknown_str;
+				} else {
+					argsstat[i].count++;
 				}
 				memcpy(argsstat[i].res, res, strlen(res)+1);
 			}
 			//printf("%d %s %s %p %p %d\n", argsstat[i].curint, res, argsstat[i].res, argsstat[i].res, res, strlen(res));
 			val = toint(res);
 			// printf("\t\t\t\t%d\r\n", val);
-			if (args[i].fmt_crit != NULL && val != 0 && ( (args[i].critical > 0 && val > args[i].critical) || (args[i].critical < 0 && val < args[i].critical*-1)))
+			if (args[i].fmt_crit != NULL && val != 0 && ( (args[i].critical > 0 && val > args[i].critical) || (args[i].critical < 0 && val < args[i].critical*-1))) {
+				argsstat[i].curcrit++;
 				fmt = args[i].fmt_crit;
-			else
+			} else
 				fmt = args[i].fmt;
 
 			if ((ret = esnprintf(status + len, sizeof(status) - len, fmt, argsstat[i].res)) < 0) {
@@ -193,6 +208,10 @@ main(int argc, char *argv[])
 			}
 		}
 	}
+
+	int ping_sockfd = get_ping_sockfd();
+	if (ping_sockfd > 0)
+		close(ping_sockfd);
 
 	if (!sflag) {
 		XStoreName(dpy, DefaultRootWindow(dpy), NULL);

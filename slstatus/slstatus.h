@@ -21,14 +21,18 @@ const char *disk_used(const char *path);
 /* entropy */
 const char *entropy(void);
 
-const char *ping(char* hostname);
-
 /* hostname */
 const char *hostname(void);
 
 /* ip */
 const char *ipv4(const char *interface);
 const char *ipv6(const char *interface);
+
+const char *ping(char* hostname);
+const char *ping_errors();
+
+const char *crit_abs(int index);
+const char *crit_per(int index);
 
 /* kernel_release */
 const char *kernel_release(void);

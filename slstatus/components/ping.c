@@ -12,6 +12,7 @@
 #include <unistd.h> 
 #include <string.h> 
 #include <stdlib.h> 
+#include <signal.h>
 #include <netinet/ip_icmp.h> 
 #include <time.h> 
 #include <fcntl.h> 
@@ -25,9 +26,6 @@
 
 // Automatic port number 
 #define PORT_NO 0 
-
-// Automatic port number 
-#define PING_SLEEP_RATE 1000000 
 
 // Gives the timeout delay for receiving packets 
 // in seconds 
@@ -85,22 +83,36 @@ char *dns_lookup(char *addr_host, struct sockaddr_in *addr_con)
 	
 } 
 
-int sockfd; 
-char *ip_addr; 
-struct sockaddr_in addr_con; 
-double timeElapsed;
+int ping_sockfd; 
+char *ping_ip_addr; 
+struct sockaddr_in ping_addr_con; 
 
-int ttl_val=64, msg_count=0, i, addr_len; 
+int ping_ttl_val=64, ping_msg_count=0, ping_addr_len; 
+long ping_count=0, ping_errors_count=0;
 
-char* ping(char* hostname) {
+int get_ping_sockfd() {
+	return ping_sockfd;
+}
 
-	if (ip_addr == NULL)
-		ip_addr = dns_lookup(hostname, &addr_con); 
+const char* ping_errors() {
+	if (ping_count == 0)
+		return "";
+	return bprintf("%.2f%%", (double)ping_errors_count/(double)ping_count*100.0);
+}
+
+const char* ping(char* hostname) {
+
+	ping_count++;
+	if (ping_ip_addr == NULL){
+		ping_ip_addr = dns_lookup(hostname, &ping_addr_con); 
+	}
 	
-	if (sockfd <= 0) {
-		sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP); 
-		if(sockfd<0)
+	if (ping_sockfd <= 0) {
+		ping_sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP); 
+		if(ping_sockfd<0) {
+			ping_errors_count++;
 			return "ERR1";
+		}
 	}
 	
 	struct timespec time_start, time_end; 
@@ -109,15 +121,19 @@ char* ping(char* hostname) {
 	struct timeval tv_out;
     tv_out.tv_sec = RECV_TIMEOUT;
     tv_out.tv_usec = 0;
+	int i=0;
+	double timeElapsed;
 
 	// set socket options at ip to TTL and value to 64, 
 	// change to what you want by setting ttl_val 
-	int a = setsockopt(sockfd, SOL_IP, IP_TTL,	&ttl_val, sizeof(ttl_val));
-	if (a != 0) 
+	int a = setsockopt(ping_sockfd, SOL_IP, IP_TTL,	&ping_ttl_val, sizeof(ping_ttl_val));
+	if (a != 0) {
+		ping_errors_count++;
 		return "ERR2"; 
+	}
 	//
 	// setting timeout of recv setting 
-	setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv_out, sizeof tv_out); 
+	setsockopt(ping_sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv_out, sizeof tv_out); 
 
 	//filling packet 
 	bzero(&pckt, sizeof(pckt)); 
@@ -129,21 +145,21 @@ char* ping(char* hostname) {
 		pckt.msg[i] = i+'0'; 
 	
 	pckt.msg[i] = 0; 
-	pckt.hdr.un.echo.sequence = msg_count++; 
+	pckt.hdr.un.echo.sequence = ping_msg_count++; 
 	pckt.hdr.checksum = checksum(&pckt, sizeof(pckt)); 
 
 
-	usleep(PING_SLEEP_RATE); 
-
 	clock_gettime(CLOCK_MONOTONIC, &time_start); 
-	if ( sendto(sockfd, &pckt, sizeof(pckt), 0, &addr_con, sizeof(addr_con)) <= 0) { 
+	if ( sendto(ping_sockfd, &pckt, sizeof(pckt), 0, &ping_addr_con, sizeof(ping_addr_con)) <= 0) { 
+		ping_errors_count++;
 		return "ERR3";
 	} 
 
 	//receive packet 
-	addr_len=sizeof(r_addr); 
+	ping_addr_len=sizeof(r_addr); 
 
-	if ( recvfrom(sockfd, &pckt, sizeof(pckt), 0, (struct sockaddr*)&r_addr, &addr_len) <= 0 && msg_count>1) { 
+	if ( recvfrom(ping_sockfd, &pckt, sizeof(pckt), 0, (struct sockaddr*)&r_addr, &ping_addr_len) <= 0 && ping_msg_count>1) { 
+		ping_errors_count++;
 		return "ERR4";
 	} else {
 	
@@ -151,10 +167,15 @@ char* ping(char* hostname) {
 			
 		timeElapsed = ((double)(time_end.tv_nsec - 
 								time_start.tv_nsec))/1000000.0; 
-		if (timeElapsed < 0) timeElapsed = 0;
+
+		/* printf("\r\n%d, %d, %d, %d, %.2f\r\n", pckt.hdr.type, pckt.hdr.code, count, errors, timeElapsed); */
+		if (timeElapsed < 0) {
+			ping_errors_count++;
+			timeElapsed = 0;
+		}
 		
-		/* if(!(pckt.hdr.type ==69 && pckt.hdr.code==0)) */ 
-		/* 	return "ERR5"; */
+		/* if(!(pckt.hdr.type ==69 && pckt.hdr.code==0)) */
+		/*  	return "ERR5"; */
 	}
 
 	return bprintf("%.1f", timeElapsed);
