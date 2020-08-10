@@ -1,0 +1,14 @@
+#Stop MongoDB Server
+service mongod stop
+
+# Copy mongo directory to new directory:
+rsync -av /var/lib/mongo /home/data/
+
+# Rename old directory
+mv /var/lib/mongo /var/lib/mongo.bak
+
+#symlink to the new location
+ln -s /home/data/mongo /var/lib/mongo
+
+#Start MongoDB Server
+service mongod start

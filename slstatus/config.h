@@ -63,7 +63,9 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ run_command, ",[{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"color\":\"#CCFF90\", \"background\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" %s \"},", NULL, "playerctl --player=vlc metadata vlc:nowplaying", 1, 0 },
+	/* { run_command, ",[{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"color\":\"#CCFF90\", \"background\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" %s \"},", NULL, "playerctl --player=vlc metadata vlc:nowplaying", 1, 0 }, */
+	{ run_command, ",[{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"color\":\"#CCFF90\", \"background\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" %s \"},", NULL, "mocp -Q %title", 1, 0 },
+	/* { run_command, ",[{\"full_text\":\"\", \"color\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0 }, {\"color\":\"#CCFF90\", \"background\": \"#1f0e11AA\", \"separator\":false, \"separator_block_width\": 0, \"full_text\":\" %s \"},", NULL, "playerctl --player=vlc metadata --format '{{duration(position)}}|{{duration(mpris:length)}} - {{xesam:artist}} - {{xesam:title}}'", 1, 0 }, */
 //	{ vol_perc, "{\"full_text\":\" %s%%\"},", "/dev/mixer", 1}, // modprobe snd-pcm-oss
 	{ ram_used, "{\"full_text\":\"\", \"background\": \"#1f0e11AA\", \"color\": \"#FFFFFFAA\", \"separator\":false, \"separator_block_width\": 0 }, {\"separator\": false, \"separator_block_width\": 0, \"color\":\"#000000\", \"background\": \"#FFFFFFAA\", \"full_text\":\" %s", NULL, NULL, 1, 0},
 	{ ram_total, "/%s \"},", NULL, NULL, 0, 0 },
