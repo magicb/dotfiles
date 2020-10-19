@@ -1,5 +1,6 @@
 // C program to Implement Ping 
 // https://www.geeksforgeeks.org/ping-in-c/
+// https://echorand.me/posts/my-own-ping/
 // compile as -o ping 
 // run as sudo ./ping <hostname> 
 
@@ -17,6 +18,7 @@
 #include <time.h> 
 #include <fcntl.h> 
 #include <time.h> 
+#include <errno.h>
 
 #include "../util.h"
 
@@ -111,7 +113,7 @@ const char* ping(char* hostname) {
 		ping_sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP); 
 		if(ping_sockfd<0) {
 			ping_errors_count++;
-			return "ERR1";
+			return strerror( errno );
 		}
 	}
 	
@@ -129,7 +131,7 @@ const char* ping(char* hostname) {
 	int a = setsockopt(ping_sockfd, SOL_IP, IP_TTL,	&ping_ttl_val, sizeof(ping_ttl_val));
 	if (a != 0) {
 		ping_errors_count++;
-		return "ERR2"; 
+		return strerror(errno);
 	}
 	//
 	// setting timeout of recv setting 
@@ -152,7 +154,7 @@ const char* ping(char* hostname) {
 	clock_gettime(CLOCK_MONOTONIC, &time_start); 
 	if ( sendto(ping_sockfd, &pckt, sizeof(pckt), 0, &ping_addr_con, sizeof(ping_addr_con)) <= 0) { 
 		ping_errors_count++;
-		return "ERR3";
+		return strerror( errno );
 	} 
 
 	//receive packet 
@@ -160,7 +162,7 @@ const char* ping(char* hostname) {
 
 	if ( recvfrom(ping_sockfd, &pckt, sizeof(pckt), 0, (struct sockaddr*)&r_addr, &ping_addr_len) <= 0 && ping_msg_count>1) { 
 		ping_errors_count++;
-		return "ERR4";
+		return strerror( errno );
 	} else {
 	
 		clock_gettime(CLOCK_MONOTONIC, &time_end); 
