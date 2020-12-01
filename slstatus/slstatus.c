@@ -130,7 +130,7 @@ main(int argc, char *argv[])
 	if (!sflag && !(dpy = XOpenDisplay(NULL))) {
 		die("XOpenDisplay: Failed to open display");
 	}
-	printf("{\"version\":1}[\n[]\n");
+	//printf("{\"version\":1}[\n[]\n");
 
 	for (i = 0; i < LEN(args); i++) {
 		/* printf("%s %s %s %d %d\r\n", args[i].fmt, args[i].fmt_crit, args[i].args, args[i].interval, args[i].critical); */

@@ -53,3 +53,5 @@ vip - Select block
 Ctrl+Z - Suspend vim. In terminal type "fg" to go back vim.
 
 Ctrl+A / Ctrl+X - Increment/decrement number
+
+:g/^$/d - Remove all empty lines
